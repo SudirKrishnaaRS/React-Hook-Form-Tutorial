@@ -8,10 +8,13 @@ type FormValues = {
   username: string;
   email: string;
   channel: string;
+  // nested objects
   social: {
     twitter: string;
     facebook: string;
   };
+  // array
+  phoneNumbers: string[];
 };
 
 const YouTubeForm = () => {
@@ -25,6 +28,7 @@ const YouTubeForm = () => {
         twitter: "",
         facebook: "",
       },
+      phoneNumbers: ["", ""],
     },
   });
 
@@ -156,6 +160,20 @@ const YouTubeForm = () => {
           <label htmlFor="facebook">Facebook</label>
           {/* Here register("social.facebook") - social.facebook is because we are nesting the facebook into social object */}
           <input type="text" id="facebook" {...register("social.facebook")} />
+        </div>
+
+        {/* This div is just for css styling  */}
+        <div className="form-control">
+          <label htmlFor="primary-phone">Primary Phone Number</label>
+          {/* Here register("phoneNumbers.0")} - phoneNumbers.0 is to store in 0th index of phoneNumbers[] */}
+          <input type="text" id="primary-phone" {...register("phoneNumbers.0")} />
+        </div>
+
+         {/* This div is just for css styling  */}
+         <div className="form-control">
+          <label htmlFor="secondary-phone">Secondary Phone Number</label>
+          {/* Here register("phoneNumbers.1")} - phoneNumbers.1 is to store in 1st index of phoneNumbers[] */}
+          <input type="text" id="secondary-phone" {...register("phoneNumbers.1")} />
         </div>
 
         <button>Submit</button>
