@@ -152,28 +152,68 @@ const YouTubeForm = () => {
         <div className="form-control">
           <label htmlFor="twitter">Twitter</label>
           {/* Here register("social.twitter") - social.twitter is because we are nesting the twitter into social object */}
-          <input type="text" id="twitter" {...register("social.twitter")} />
+          <input
+            type="text"
+            id="twitter"
+            {...register("social.twitter", {
+              required: {
+                value: true,
+                message: "Twitter profile-id is required",
+              },
+            })}
+          />
+          <p className="error">{errors.social?.twitter?.message}</p>
         </div>
 
         {/* This div is just for css styling  */}
         <div className="form-control">
           <label htmlFor="facebook">Facebook</label>
           {/* Here register("social.facebook") - social.facebook is because we are nesting the facebook into social object */}
-          <input type="text" id="facebook" {...register("social.facebook")} />
+          <input
+            type="text"
+            id="facebook"
+            {...register("social.facebook", {
+              required: {
+                value: true,
+                message: "Facebook profile-link is required",
+              },
+            })}
+          />
+          <p className="error">{errors.social?.facebook?.message}</p>
         </div>
 
         {/* This div is just for css styling  */}
         <div className="form-control">
           <label htmlFor="primary-phone">Primary Phone Number</label>
           {/* Here register("phoneNumbers.0")} - phoneNumbers.0 is to store in 0th index of phoneNumbers[] */}
-          <input type="text" id="primary-phone" {...register("phoneNumbers.0")} />
+          <input
+            type="text"
+            id="primary-phone"
+            {...register("phoneNumbers.0", {
+              required: {
+                value: true,
+                message: "Primary Phone Number is required",
+              },
+            })}
+          />
+          <p className="error">{errors.phoneNumbers?.at(0)?.message}</p>
         </div>
 
-         {/* This div is just for css styling  */}
-         <div className="form-control">
+        {/* This div is just for css styling  */}
+        <div className="form-control">
           <label htmlFor="secondary-phone">Secondary Phone Number</label>
           {/* Here register("phoneNumbers.1")} - phoneNumbers.1 is to store in 1st index of phoneNumbers[] */}
-          <input type="text" id="secondary-phone" {...register("phoneNumbers.1")} />
+          <input
+            type="text"
+            id="secondary-phone"
+            {...register("phoneNumbers.1", {
+              required: {
+                value: true,
+                message: "Secondary Phone Number is required",
+              },
+            })}
+          />
+          <p className="error">{errors.phoneNumbers?.at(1)?.message}</p>
         </div>
 
         <button>Submit</button>
