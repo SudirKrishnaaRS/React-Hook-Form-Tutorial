@@ -36,15 +36,15 @@ const YouTubeForm = () => {
 
       {/* noValidate : means This will prevent browser validation and allowing react-hook-form to handle the VALIDATIONS of the feilds */}
       <form onSubmit={handleSubmit(onSubmit)} noValidate>
-        
         {/* This div is just for css styling  */}
         <div className="form-control">
           <label htmlFor="username">Username</label>
           <input
             type="text"
             id="username"
+            // By adding the below line brings it under tracking of react-hook-form
             {...register("username", {
-              // Validating Required
+              // Validation - Required feild
               required: {
                 value: true,
                 message: "Username is required",
@@ -62,11 +62,36 @@ const YouTubeForm = () => {
             type="email"
             id="email"
             {...register("email", {
-              // Validating RegEx
+              // Validation - RegEx
               pattern: {
                 value:
                   /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
                 message: "Invalid email format",
+              },
+              // Validation - Custom validation for our specific business logic
+              validate: {
+                // Here "notAdmin" is just a name (any name can be given here)
+                // HINT : "feildValue" is the value which you enter for the feild (here its for email)
+                notAdmin: (feildValue) => {
+                  return (
+                    /* It checks if the value of the email field is not equal to "admin@example.com". 
+                      -  If it is equal to "admin@example.com", it returns the error message "Enter a different email address".
+                      -  If it is not equal to "admin@example.com", it returns true, indicating that the validation has passed. */
+                    feildValue !== "admin@example.com" ||
+                    "Enter a different email address"
+                  );
+                },
+                // Here "notBlackListed" is just a name (any name can be given here)
+                notBlackListed: (feildValue) => {
+                  return (
+                    /* It checks if the email address entered by the user does not end with "baddomain.com".
+                      -  If it does not end with "baddomain.com", the validation passes and returns true.
+                      -  If it ends with "baddomain.com", the validation fails and returns the error message "This domain is not supported".
+                      NOTE :  The `!` operator is used to negate the result of `feildValue.endsWith("baddomain.com")`. */
+                    !feildValue.endsWith("baddomain.com") ||
+                    "This domain is not supported"
+                  );
+                },
               },
             })}
           />
@@ -80,7 +105,7 @@ const YouTubeForm = () => {
             type="text"
             id="channel"
             {...register("channel", {
-              // Validating Required
+              // Validation - Required feild
               required: {
                 value: true,
                 message: "Channel is required",
