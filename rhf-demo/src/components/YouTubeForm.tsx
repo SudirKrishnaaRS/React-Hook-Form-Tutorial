@@ -1,23 +1,15 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import { DevTool } from "@hookform/devtools";
 
 const YouTubeForm = () => {
   const form = useForm();
-  const { register } = form;
-  // const { name, ref, onChange, onBlur } = register("username");
+  const { register, control } = form;
 
   return (
     <div>
       <form>
         <label htmlFor="username">Username</label>
-        {/* <input
-          type="text"
-          id="username"
-          name={name}
-          ref={ref}
-          onChange={onChange}
-          onBlur={onBlur}
-        /> */}
         <input type="text" id="username" {...register("username")} />
 
         <label htmlFor="email">Email</label>
@@ -28,6 +20,9 @@ const YouTubeForm = () => {
 
         <button>Submit</button>
       </form>
+
+      {/* For Devtool visualization */}
+      <DevTool control={control}/>
     </div>
   );
 };
