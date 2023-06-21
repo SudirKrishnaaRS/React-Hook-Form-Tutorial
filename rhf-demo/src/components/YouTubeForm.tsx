@@ -1,7 +1,8 @@
 import React from "react";
-import { useForm } from "react-hook-form";
+import { useForm, useFieldArray } from "react-hook-form";
 import { DevTool } from "@hookform/devtools";
 
+// Just for debugging if the component re-renders how many times
 let renderCount = 0;
 
 type FormValues = {
@@ -15,6 +16,9 @@ type FormValues = {
   };
   // array
   phoneNumbers: string[];
+  phNumbers: {
+    number: string;
+  }[];
 };
 
 const YouTubeForm = () => {
@@ -29,6 +33,7 @@ const YouTubeForm = () => {
         facebook: "",
       },
       phoneNumbers: ["", ""],
+      phNumbers: [{ number: "" }],
     },
   });
 
@@ -48,6 +53,14 @@ const YouTubeForm = () => {
   const { register, control, handleSubmit, formState } = form;
   //errors -  For validation errors messages
   const { errors } = formState;
+
+  // For Dynamic Feilds
+    // append - built-in function to add dynamic feild
+    // remove - built-in function to remove dynamic feild
+  const { fields, append, remove } = useFieldArray<any>({
+    name: "phNumbers",
+    control,
+  });
 
   // FORM SUBMISSION : (3 Steps)
   // Step 1: Define the functionwhich should be called when the submit button is pressed
@@ -214,6 +227,38 @@ const YouTubeForm = () => {
             })}
           />
           <p className="error">{errors.phoneNumbers?.at(1)?.message}</p>
+        </div>
+
+{/* Dynamic Feilds */}
+        <div>
+          <label>List of phone numbers</label>
+          <div>
+            {fields.map((field, index) => {
+              return (
+                // TIP:  Here key={feild.id} beacuse react-hook-form website recommends this and not to use index
+                <div className="form-control" key={field.id}>
+                  <input
+                    type="text"
+                    {...register(`phNumbers.${index}.number` as const)} // Here  as const is just for TYPESCRIPT
+                  />
+                  {/* Remove button is shown for every phone number except the first ph number feild */}
+                  {index > 0 && (
+                          // remove - built-in function to remove dynamic feild
+                          //        - accepts index to be removed as a parameter
+                    <button type="button" onClick={() => remove(index)}>
+                      Remove
+                    </button>
+                  )}
+                </div>
+              );
+            })}
+
+                    {/*  append - built-in function to add dynamic feild 
+                                - accepts an object as a parameter */}
+            <button type="button" onClick={() => append({ number: "" })}>
+              Add phone number
+            </button>
+          </div>
         </div>
 
         <button>Submit</button>
