@@ -1,4 +1,3 @@
-import React from "react";
 import { useForm, useFieldArray } from "react-hook-form";
 import { DevTool } from "@hookform/devtools";
 
@@ -213,7 +212,7 @@ const YouTubeForm = () => {
               },
             })}
           />
-          <p className="error">{errors.phoneNumbers?.at(0)?.message}</p>
+          {/* <p className="error">{errors.phoneNumbers?.at(0)?.message}</p> */}
         </div>
 
         {/* This div is just for css styling  */}
@@ -230,7 +229,7 @@ const YouTubeForm = () => {
               },
             })}
           />
-          <p className="error">{errors.phoneNumbers?.at(1)?.message}</p>
+          {/* <p className="error">{errors.phoneNumbers?.at(1)?.message}</p> */}
         </div>
 
         {/* Dynamic Feilds */}
