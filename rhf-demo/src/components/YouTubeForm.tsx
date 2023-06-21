@@ -11,7 +11,28 @@ type FormValues = {
 };
 
 const YouTubeForm = () => {
-  const form = useForm<FormValues>();
+  // Default values for the feilds in the form - Here the username feild gets populated with batman as default
+  const form = useForm<FormValues>({
+    defaultValues: {
+      username: "Batman",
+      email: "",
+      channel: "",
+    }
+  });
+
+  // Example usage: How to store the default values by making an API call 
+  // const form = useForm<FormValues>({
+  //   defaultValues: async () => {
+  //       const response = await fetch("https://jsonplaceholder.typicode.com/users/1");
+  //       const data = await response.json();
+  //       return {
+  //         username: data.username,
+  //         email: data.email,
+  //         channel: "",
+  //       }
+  //   }
+  // });
+
   const { register, control, handleSubmit, formState } = form;
   //errors -  For validation errors messages
   const { errors } = formState;
