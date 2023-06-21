@@ -8,6 +8,10 @@ type FormValues = {
   username: string;
   email: string;
   channel: string;
+  social: {
+    twitter: string;
+    facebook: string;
+  };
 };
 
 const YouTubeForm = () => {
@@ -17,10 +21,14 @@ const YouTubeForm = () => {
       username: "Batman",
       email: "",
       channel: "",
-    }
+      social: {
+        twitter: "",
+        facebook: "",
+      },
+    },
   });
 
-  // Example usage: How to store the default values by making an API call 
+  // Example usage: How to store the default values by making an API call
   // const form = useForm<FormValues>({
   //   defaultValues: async () => {
   //       const response = await fetch("https://jsonplaceholder.typicode.com/users/1");
@@ -134,6 +142,20 @@ const YouTubeForm = () => {
             })}
           />
           <p className="error">{errors.channel?.message}</p>
+        </div>
+
+        {/* This div is just for css styling  */}
+        <div className="form-control">
+          <label htmlFor="twitter">Twitter</label>
+          {/* Here register("social.twitter") - social.twitter is because we are nesting the twitter into social object */}
+          <input type="text" id="twitter" {...register("social.twitter")} />
+        </div>
+
+        {/* This div is just for css styling  */}
+        <div className="form-control">
+          <label htmlFor="facebook">Facebook</label>
+          {/* Here register("social.facebook") - social.facebook is because we are nesting the facebook into social object */}
+          <input type="text" id="facebook" {...register("social.facebook")} />
         </div>
 
         <button>Submit</button>
