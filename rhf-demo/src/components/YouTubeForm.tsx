@@ -19,6 +19,8 @@ type FormValues = {
   phNumbers: {
     number: string;
   }[];
+  age: number;
+  dob: Date;
 };
 
 const YouTubeForm = () => {
@@ -26,14 +28,16 @@ const YouTubeForm = () => {
   const form = useForm<FormValues>({
     defaultValues: {
       username: "Batman",
-      email: "",
-      channel: "",
+      email: "sudir@gmail.com",
+      channel: "sudir - yt",
       social: {
-        twitter: "",
-        facebook: "",
+        twitter: "sudir@tw.com",
+        facebook: "sudir@fb.com",
       },
-      phoneNumbers: ["", ""],
+      phoneNumbers: ["0422", "0123"],
       phNumbers: [{ number: "" }],
+      age: 30,
+      dob: new Date(),
     },
   });
 
@@ -55,8 +59,8 @@ const YouTubeForm = () => {
   const { errors } = formState;
 
   // For Dynamic Feilds
-    // append - built-in function to add dynamic feild
-    // remove - built-in function to remove dynamic feild
+  // append - built-in function to add dynamic feild
+  // remove - built-in function to remove dynamic feild
   const { fields, append, remove } = useFieldArray<any>({
     name: "phNumbers",
     control,
@@ -229,7 +233,7 @@ const YouTubeForm = () => {
           <p className="error">{errors.phoneNumbers?.at(1)?.message}</p>
         </div>
 
-{/* Dynamic Feilds */}
+        {/* Dynamic Feilds */}
         <div>
           <label>List of phone numbers</label>
           <div>
@@ -243,8 +247,8 @@ const YouTubeForm = () => {
                   />
                   {/* Remove button is shown for every phone number except the first ph number feild */}
                   {index > 0 && (
-                          // remove - built-in function to remove dynamic feild
-                          //        - accepts index to be removed as a parameter
+                    // remove - built-in function to remove dynamic feild
+                    //        - accepts index to be removed as a parameter
                     <button type="button" onClick={() => remove(index)}>
                       Remove
                     </button>
@@ -253,12 +257,50 @@ const YouTubeForm = () => {
               );
             })}
 
-                    {/*  append - built-in function to add dynamic feild 
+            {/*  append - built-in function to add dynamic feild 
                                 - accepts an object as a parameter */}
             <button type="button" onClick={() => append({ number: "" })}>
               Add phone number
             </button>
           </div>
+        </div>
+
+        {/* This div is just for css styling  */}
+        <div className="form-control">
+          <label htmlFor="age">Age</label>
+          <input
+            type="number"
+            id="age"
+            {...register("age", {
+              // NOTE: By default it's set as STRING , so make sure valueAsNumber is true to make it as a number
+              valueAsNumber: true,
+              // Validation - Required feild
+              required: {
+                value: true,
+                message: "Age is required",
+              },
+            })}
+          />
+          <p className="error">{errors.age?.message}</p>
+        </div>
+
+        {/* This div is just for css styling  */}
+        <div className="form-control">
+          <label htmlFor="dob">Date Of Birth</label>
+          <input
+            type="date"
+            id="dob"
+            {...register("dob", {
+              // NOTE: By default it's set as STRING , so make sure valueAsDate is true to make it as a date format
+              valueAsDate: true,
+              // Validation - Required feild
+              required: {
+                value: true,
+                message: "DOB is required",
+              },
+            })}
+          />
+          <p className="error">{errors.dob?.message}</p>
         </div>
 
         <button>Submit</button>
