@@ -54,7 +54,15 @@ const YouTubeForm = () => {
   //   }
   // });
 
-  const { register, control, handleSubmit, formState, watch, getValues } = form;
+  const {
+    register,
+    control,
+    handleSubmit,
+    formState,
+    watch,
+    getValues,
+    setValue,
+  } = form;
 
   //errors -  For validation errors messages
   const { errors } = formState;
@@ -117,6 +125,22 @@ const YouTubeForm = () => {
       "username and email Get Values",
       getValues(["username", "email"])
     );
+  };
+  // ________________________________________________________________
+
+  // Set value
+  const handleSetValues = () => {
+    // Syntax : setValue(feildName, value)
+    // Here , we set the value of the username to "hello_test" when we click on the "Set Username" button
+    // NOTE: By default it will not change the Touched:false & Dirty:false properties even though we chnage the value
+    // setValue("username", "hello_test");
+
+    // To chnage the Touched & Dirty properties
+    setValue("username", "hello_test", {
+      shouldValidate: true,
+      shouldDirty: true,
+      shouldTouch: true,
+    });
   };
 
   renderCount++;
@@ -352,6 +376,10 @@ const YouTubeForm = () => {
         <button>Submit</button>
         <button type="button" onClick={handleGetValues}>
           Get Values
+        </button>
+
+        <button type="button" onClick={handleSetValues}>
+          Set Username Value
         </button>
       </form>
 
