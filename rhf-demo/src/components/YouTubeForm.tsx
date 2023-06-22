@@ -54,7 +54,8 @@ const YouTubeForm = () => {
   //   }
   // });
 
-  const { register, control, handleSubmit, formState, watch } = form;
+  const { register, control, handleSubmit, formState, watch, getValues } = form;
+
   //errors -  For validation errors messages
   const { errors } = formState;
 
@@ -91,15 +92,32 @@ const YouTubeForm = () => {
   // const watchForm = watch();
 
   // When you want want to perfrom some side effects while watching the values
-  useEffect(() => {
-    // Here value is the latest value which is being watched for changes
-    const subscription = watch((value) => {
-      console.log(value);
-    });
+  // useEffect(() => {
+  //   // Here value is the latest value which is being watched for changes
+  //   const subscription = watch((value) => {
+  //     console.log(value);
+  //   });
 
-    // This is a Cleanup method : we unsubcribe the subscription
-    return () => subscription.unsubscribe();
-  }, [watch]);
+  //   // This is a Cleanup method : we unsubcribe the subscription
+  //   return () => subscription.unsubscribe();
+  // }, [watch]);
+
+  // ________________________________________________________________
+
+  // Get Values : This method is useful for retrieving the values when a specific action is performed (eg button click)
+  const handleGetValues = () => {
+    // Get all the values
+    console.log("Get Values", getValues());
+
+    // Get single value
+    console.log("Social Get Values", getValues("social"));
+
+    // Get multiple value
+    console.log(
+      "username and email Get Values",
+      getValues(["username", "email"])
+    );
+  };
 
   renderCount++;
   return (
@@ -330,7 +348,11 @@ const YouTubeForm = () => {
           <p className="error">{errors.dob?.message}</p>
         </div>
 
+        <br />
         <button>Submit</button>
+        <button type="button" onClick={handleGetValues}>
+          Get Values
+        </button>
       </form>
 
       {/* For Devtool visualization */}
