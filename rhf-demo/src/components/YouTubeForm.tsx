@@ -1,5 +1,6 @@
 import { useForm, useFieldArray } from "react-hook-form";
 import { DevTool } from "@hookform/devtools";
+import { useEffect } from "react";
 
 // Just for debugging if the component re-renders how many times
 let renderCount = 0;
@@ -53,7 +54,7 @@ const YouTubeForm = () => {
   //   }
   // });
 
-  const { register, control, handleSubmit, formState } = form;
+  const { register, control, handleSubmit, formState, watch } = form;
   //errors -  For validation errors messages
   const { errors } = formState;
 
@@ -77,11 +78,38 @@ const YouTubeForm = () => {
   // Step 3: Pass an onSubmit function in <form> JSX tag and pass it like
   //  <form onSubmit={handleSubmit(onSubmit //--HINT: which we defined in step 1--// )}> (LINE NUM 26)
 
+  // ________________________________________________________________
+
+  // Watch Feild Values
+  // Watch Single value
+  // const watchUsername = watch("username");
+
+  // Watch Multiple values
+  // const watchUsername = watch(["username","email"]);
+
+  // Watch the entire form
+  // const watchForm = watch();
+
+  // When you want want to perfrom some side effects while watching the values
+  useEffect(() => {
+    // Here value is the latest value which is being watched for changes
+    const subscription = watch((value) => {
+      console.log(value);
+    });
+
+    // This is a Cleanup method : we unsubcribe the subscription
+    return () => subscription.unsubscribe();
+  }, [watch]);
+
   renderCount++;
   return (
     <div>
       {/* HINT: renderCount / 2 : because react strict mode renders each comeponent twice so we divide by 2 */}
       <h1>Youtube Form ({renderCount / 2})</h1>
+
+      {/* Displaying watched values */}
+      {/* <h2>Watched value: {watchUsername}</h2> */}
+      {/* <h2>Watched value: {JSON.stringify(watchForm)}</h2> */}
 
       {/* noValidate : means This will prevent browser validation and allowing react-hook-form to handle the VALIDATIONS of the feilds */}
       <form onSubmit={handleSubmit(onSubmit)} noValidate>
