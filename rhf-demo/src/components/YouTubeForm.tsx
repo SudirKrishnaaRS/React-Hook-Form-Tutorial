@@ -65,7 +65,14 @@ const YouTubeForm = () => {
   } = form;
 
   //errors -  For validation errors messages
-  const { errors } = formState;
+  const { errors, touchedFields, dirtyFields, isDirty } = formState;
+
+  console.log("Touched Feilds :",touchedFields);
+  console.log("Dirty Feilds :",dirtyFields);
+  
+  // isDirty is useful (HINT: like a flag) when to show/disable the submit button 
+  console.log("isDirty  :",isDirty);
+
 
   // For Dynamic Feilds
   // append - built-in function to add dynamic feild
