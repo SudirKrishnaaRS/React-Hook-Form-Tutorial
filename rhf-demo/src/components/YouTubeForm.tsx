@@ -1,4 +1,4 @@
-import { useForm, useFieldArray } from "react-hook-form";
+import { useForm, useFieldArray, FieldErrors } from "react-hook-form";
 import { DevTool } from "@hookform/devtools";
 import { useEffect } from "react";
 
@@ -94,6 +94,11 @@ const YouTubeForm = () => {
   // Step 3: Pass an onSubmit function in <form> JSX tag and pass it like
   //  <form onSubmit={handleSubmit(onSubmit //--HINT: which we defined in step 1--// )}> (LINE NUM 26)
 
+  // This function is called when the form submission fails due to errors
+  const onError = (errors: FieldErrors<FormValues>) => {
+    console.log("Form errors:", errors);
+  }
+
   // ________________________________________________________________
 
   // Watch Feild Values
@@ -161,7 +166,7 @@ const YouTubeForm = () => {
       {/* <h2>Watched value: {JSON.stringify(watchForm)}</h2> */}
 
       {/* noValidate : means This will prevent browser validation and allowing react-hook-form to handle the VALIDATIONS of the feilds */}
-      <form onSubmit={handleSubmit(onSubmit)} noValidate>
+      <form onSubmit={handleSubmit(onSubmit, onError)} noValidate>
         {/* This div is just for css styling  */}
         <div className="form-control">
           <label htmlFor="username">Username</label>
