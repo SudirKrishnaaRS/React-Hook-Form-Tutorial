@@ -66,7 +66,7 @@ const YouTubeForm = () => {
   } = form;
 
 
-  
+
   //errors -  For validation errors messages
   // touchedFields - returns the fields which the user has interacted
   // dirtyFields - returns the fields which the user has chnaged the field data
@@ -267,6 +267,11 @@ const YouTubeForm = () => {
                     "This domain is not supported"
                   );
                 },
+                emailAvailable: async (fieldValue) => {
+                  const response = await fetch(`https://jsonplaceholder.typicode.com/users?email=${fieldValue}`);
+                  const data = await response.json();
+                  return data.length == 0 || "Email already exists";
+                }
               },
             })}
           />
@@ -431,7 +436,9 @@ const YouTubeForm = () => {
         {/* Submit Button is disabled until the isDirty `boolean` flag becomes true 
         or isValid becomes true 
         or isSubmitting becomes true (to prevent multiple submits)*/}
-        <button disabled={!isDirty || !isValid || isSubmitting}>Submit</button>
+        <button disabled={!isDirty 
+          // || !isValid 
+          || isSubmitting}>Submit</button>
 
         <button type="button" onClick={() => reset()}>
           Reset
