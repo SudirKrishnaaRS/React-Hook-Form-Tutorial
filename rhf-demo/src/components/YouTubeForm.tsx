@@ -62,29 +62,43 @@ const YouTubeForm = () => {
     watch,
     getValues,
     setValue,
+    reset,
   } = form;
 
+
+  
   //errors -  For validation errors messages
-  // touchedFields - returns the fields which the user has interacted 
+  // touchedFields - returns the fields which the user has interacted
   // dirtyFields - returns the fields which the user has chnaged the field data
   // isDirty - returns the true if any of the feild data in the whole form has changed
   // isValid - returns true if the form is valid (i.e without any errors and no validation errors)
   // isSubmitting - allows you to know if the form is being submitted (ie few secs between when the user click on submit button and form has been successfully submitted)
   // isSubmitSuccessful - boolean indicating if the form has been successfully submitted without any validation errors
   // submitCount - count of successful form submissions
-  const { errors, touchedFields, dirtyFields, isDirty, isValid, isSubmitting, isSubmitted, isSubmitSuccessful, submitCount } = formState;
+  const {
+    errors,
+    touchedFields,
+    dirtyFields,
+    isDirty,
+    isValid,
+    isSubmitting,
+    isSubmitted,
+    isSubmitSuccessful,
+    submitCount,
+  } = formState;
 
   // console.log("Touched Feilds :",touchedFields);
   // console.log("Dirty Feilds :",dirtyFields);
-  
-  // isDirty is useful (HINT: like a flag) when to show/disable the submit button 
+
+  // isDirty is useful (HINT: like a flag) when to show/disable the submit button
   // console.log("isDirty  :",isDirty);
 
-  console.log("isSubmitting", isSubmitting);
-  console.log("isSubmitted", isSubmitted);
-  console.log("isSubmitSuccessful", isSubmitSuccessful);
-  console.log("submitCount", submitCount);
+  // console.log("isSubmitting", isSubmitting);
+  // console.log("isSubmitted", isSubmitted);
+  // console.log("isSubmitSuccessful", isSubmitSuccessful);
+  // console.log("submitCount", submitCount);
 
+  // ________________________________________________________________
 
   // For Dynamic Feilds
   // append - built-in function to add dynamic feild
@@ -93,6 +107,8 @@ const YouTubeForm = () => {
     name: "phNumbers",
     control,
   });
+
+  // ________________________________________________________________
 
   // FORM SUBMISSION : (3 Steps)
   // Step 1: Define the functionwhich should be called when the submit button is pressed
@@ -106,10 +122,12 @@ const YouTubeForm = () => {
   // Step 3: Pass an onSubmit function in <form> JSX tag and pass it like
   //  <form onSubmit={handleSubmit(onSubmit //--HINT: which we defined in step 1--// )}> (LINE NUM 26)
 
+  // ________________________________________________________________
+
   // This function is called when the form submission fails due to errors
   const onError = (errors: FieldErrors<FormValues>) => {
     console.log("Form errors:", errors);
-  }
+  };
 
   // ________________________________________________________________
 
@@ -167,7 +185,21 @@ const YouTubeForm = () => {
     });
   };
 
+  // ________________________________________________________________
+
+  // To reset the form fields when the form is submitted successfully
+  useEffect(() => {
+    if (isSubmitSuccessful) {
+      reset();
+    }
+  }, [isSubmitSuccessful]);
+
+  // ________________________________________________________________
+
   renderCount++;
+
+  // ________________________________________________________________
+
   return (
     <div>
       {/* HINT: renderCount / 2 : because react strict mode renders each comeponent twice so we divide by 2 */}
@@ -400,6 +432,11 @@ const YouTubeForm = () => {
         or isValid becomes true 
         or isSubmitting becomes true (to prevent multiple submits)*/}
         <button disabled={!isDirty || !isValid || isSubmitting}>Submit</button>
+
+        <button type="button" onClick={() => reset()}>
+          Reset
+        </button>
+
         <button type="button" onClick={handleGetValues}>
           Get Values
         </button>
