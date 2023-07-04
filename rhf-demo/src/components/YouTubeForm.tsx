@@ -65,7 +65,7 @@ const YouTubeForm = () => {
   } = form;
 
   //errors -  For validation errors messages
-  const { errors, touchedFields, dirtyFields, isDirty } = formState;
+  const { errors, touchedFields, dirtyFields, isDirty, isValid } = formState;
 
   // console.log("Touched Feilds :",touchedFields);
   // console.log("Dirty Feilds :",dirtyFields);
@@ -384,7 +384,8 @@ const YouTubeForm = () => {
         </div>
 
         <br />
-        <button>Submit</button>
+        {/* Submit Button is disabled until the isDirty `boolean` flag becomes true or isValid becomes true */}
+        <button disabled={!isDirty || !isValid}>Submit</button>
         <button type="button" onClick={handleGetValues}>
           Get Values
         </button>
