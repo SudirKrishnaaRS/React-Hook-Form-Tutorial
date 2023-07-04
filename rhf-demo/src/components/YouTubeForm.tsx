@@ -39,6 +39,7 @@ const YouTubeForm = () => {
       age: 30,
       dob: new Date(),
     },
+    mode: "onTouched", //there various modes when to trigger the validation - onBlur, onChange, all, onTouched, onSubmit (on submit is default)
   });
 
   // Example usage: How to store the default values by making an API call
