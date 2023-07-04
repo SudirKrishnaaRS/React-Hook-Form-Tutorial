@@ -1,5 +1,9 @@
 # React-Hook-Form-Tutorial
 
+Steps to Start running the Project:
+- cd .\rhf-demo\
+- npm run dev
+
 DevTools : 
 - npm install -D @hookform/devtools
 - How to access DevTools of react-hook-form
