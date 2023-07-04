@@ -67,11 +67,11 @@ const YouTubeForm = () => {
   //errors -  For validation errors messages
   const { errors, touchedFields, dirtyFields, isDirty } = formState;
 
-  console.log("Touched Feilds :",touchedFields);
-  console.log("Dirty Feilds :",dirtyFields);
+  // console.log("Touched Feilds :",touchedFields);
+  // console.log("Dirty Feilds :",dirtyFields);
   
   // isDirty is useful (HINT: like a flag) when to show/disable the submit button 
-  console.log("isDirty  :",isDirty);
+  // console.log("isDirty  :",isDirty);
 
 
   // For Dynamic Feilds
@@ -249,13 +249,12 @@ const YouTubeForm = () => {
             type="text"
             id="twitter"
             {...register("social.twitter", {
-              required: {
-                value: true,
-                message: "Twitter profile-id is required",
-              },
+              // disabled: true,
+              //Example Scenario : Conditionally disable only when channel (above form feild) is not filled
+              disabled: watch("channel") === "",
+              required: "Enter twitter profile",
             })}
           />
-          <p className="error">{errors.social?.twitter?.message}</p>
         </div>
 
         {/* This div is just for css styling  */}
