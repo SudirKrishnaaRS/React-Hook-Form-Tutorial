@@ -65,13 +65,25 @@ const YouTubeForm = () => {
   } = form;
 
   //errors -  For validation errors messages
-  const { errors, touchedFields, dirtyFields, isDirty, isValid } = formState;
+  // touchedFields - returns the fields which the user has interacted 
+  // dirtyFields - returns the fields which the user has chnaged the field data
+  // isDirty - returns the true if any of the feild data in the whole form has changed
+  // isValid - returns true if the form is valid (i.e without any errors and no validation errors)
+  // isSubmitting - allows you to know if the form is being submitted (ie few secs between when the user click on submit button and form has been successfully submitted)
+  // isSubmitSuccessful - boolean indicating if the form has been successfully submitted without any validation errors
+  // submitCount - count of successful form submissions
+  const { errors, touchedFields, dirtyFields, isDirty, isValid, isSubmitting, isSubmitted, isSubmitSuccessful, submitCount } = formState;
 
   // console.log("Touched Feilds :",touchedFields);
   // console.log("Dirty Feilds :",dirtyFields);
   
   // isDirty is useful (HINT: like a flag) when to show/disable the submit button 
   // console.log("isDirty  :",isDirty);
+
+  console.log("isSubmitting", isSubmitting);
+  console.log("isSubmitted", isSubmitted);
+  console.log("isSubmitSuccessful", isSubmitSuccessful);
+  console.log("submitCount", submitCount);
 
 
   // For Dynamic Feilds
@@ -384,8 +396,10 @@ const YouTubeForm = () => {
         </div>
 
         <br />
-        {/* Submit Button is disabled until the isDirty `boolean` flag becomes true or isValid becomes true */}
-        <button disabled={!isDirty || !isValid}>Submit</button>
+        {/* Submit Button is disabled until the isDirty `boolean` flag becomes true 
+        or isValid becomes true 
+        or isSubmitting becomes true (to prevent multiple submits)*/}
+        <button disabled={!isDirty || !isValid || isSubmitting}>Submit</button>
         <button type="button" onClick={handleGetValues}>
           Get Values
         </button>
